@@ -2,20 +2,28 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import {Line} from 'react-chartjs-2';
 
-
-const DynamicChart = () => {
+// pass parameter props?
+// maybe this can allow me to pass props to axios get and refine search
+function DynamicChart(props){
     const [chartData, setChartData] = useState({});
-
     const Chart = () => {
         let dates = [];
         let prices = [];
-        axios.get("http://localhost:8000/api/market")
-        .then(dat => {
-            console.log(dat.data);
-            for(const obj of dat.data){
-                prices.push(parseFloat(obj.price));
-                dates.push(Date.parse(obj.timestamp));
+        console.log(props.toLocaleDateString())
+        fetch("api/market", { body: props.toLocaleDateString()})
+        .then(response => {
+            return response.json();
+        })
+        .then(data =>{
+            console.log(data)
+            for(const obj of data){
+                let price = parseFloat(obj.price)
+                let date = new Date(obj.timestamp);
+                date = date.toLocaleString()
+                prices.unshift(price);
+                dates.unshift(date);
             }
+            console.log(dates);
             setChartData({
                 labels: dates,
                 datasets: [{
@@ -24,13 +32,13 @@ const DynamicChart = () => {
                 }]
             });
         })
-        .catch(err =>{
-            console.log(err)
-        })
+        // .catch(err =>{
+        //     console.log(err)
+        // })
     }
     useEffect(() => {
         Chart();
-    }, []);
+    }, [props]);
     return (
         <div className="table">
             <h1>Line Chart</h1>
