@@ -129,3 +129,7 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
 )
+
+
+# Coinbase API KEY: wfTp4975e2m4E38J
+# coinbase Secret API KEY: VJ4AWYcaJZsFGnUERJglPc2oIofarg1u
