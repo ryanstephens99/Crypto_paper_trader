@@ -1,6 +1,9 @@
 
 import React, { useState, useEffect } from "react";
-import { render } from "react-dom";
+import ReactDOM from "react-dom";
+import { Route, Link, Switch, BrowserRouter as Router} from "react-router-dom";
+
+import Navigation from "./navbar";
 import DateButton from "./dateButton";
 import DynamicChart from "./table";
 
@@ -10,9 +13,28 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function App(){
   const [date, setDate] = useState(new Date());
-  const chart = DynamicChart(date);
+  const button = DateButton;
+  
 
-  // const [placeholder, setPlaceholder] = useState(0);
+  return (
+    <Router>
+      <div>
+      <Navigation/>
+      <br/>
+      <br/>
+      {/* <DatePicker selected={date} onChange={(date) => setDate(date)} /> */}
+        <Route path="/chart" component={DynamicChart}/>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
+const container = document.getElementById("app");
+ReactDOM.render(<App />, container);
+
+ // const [placeholder, setPlaceholder] = useState(0);
 
   // useEffect(() => {
   //   chart = DynamicChart();
@@ -38,19 +60,3 @@ function App(){
   //   pricePoint.price = parseFloat(pricePoint.price)
   //   console.log(pricePoint);
   // });
-  const button = DateButton;
-  
-
-  console.log(date);
-  return (
-    <div>
-      <DatePicker selected={date} onChange={(date) => setDate(date)} />
-      {chart}
-    </div>
-  );
-}
-
-export default App;
-
-const container = document.getElementById("app");
-render(<App />, container);

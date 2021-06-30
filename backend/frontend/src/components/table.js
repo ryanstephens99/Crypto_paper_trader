@@ -9,13 +9,11 @@ function DynamicChart(props){
     const Chart = () => {
         let dates = [];
         let prices = [];
-        console.log(props.toLocaleDateString())
-        fetch("api/market", { body: props.toLocaleDateString()})
+        fetch("api/market")
         .then(response => {
             return response.json();
         })
         .then(data =>{
-            console.log(data)
             for(const obj of data){
                 let price = parseFloat(obj.price)
                 let date = new Date(obj.timestamp);
@@ -23,7 +21,6 @@ function DynamicChart(props){
                 prices.unshift(price);
                 dates.unshift(date);
             }
-            console.log(dates);
             setChartData({
                 labels: dates,
                 datasets: [{
@@ -38,7 +35,7 @@ function DynamicChart(props){
     }
     useEffect(() => {
         Chart();
-    }, [props]);
+    }, []);
     return (
         <div className="table">
             <h1>Line Chart</h1>
