@@ -25,7 +25,7 @@ SECRET_KEY = 'zj!6+u8s!*u$dh=+kl4fzodrvhrym@g)1^9omimhk2woe&--+='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['174.248.148.10', 'localhost']
 
 
 # Application definition
@@ -129,3 +129,7 @@ STATIC_URL = '/static/'
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
 )
+
+
+# Coinbase API KEY: wfTp4975e2m4E38J
+# coinbase Secret API KEY: VJ4AWYcaJZsFGnUERJglPc2oIofarg1u

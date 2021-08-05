@@ -12,3 +12,10 @@ pytz==2021.1
 six==1.15.0
 sqlparse==0.4.1
 toml==0.10.2
+cbpro==1.1.4
+coinbase==2.1.0
+pycryptodome==3.10.1
+pymongo==3.5.1
+requests==2.13.0
+sortedcontainers==2.4.0
+websocket-client==0.40.0
