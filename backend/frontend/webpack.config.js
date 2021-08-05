@@ -1,4 +1,5 @@
 const webpack = require('webpack')
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 
 module.exports = {
     module: {
@@ -25,5 +26,13 @@ module.exports = {
                 use: ['@svgr/webpack']
             }
         ]
+    },
+    plugins: [ new NodePolyfillPlugin()],
+    resolve: {
+        fallback:{
+            // tls: false,
+            // net: false,
+            fs: false,
+        }
     }
 };

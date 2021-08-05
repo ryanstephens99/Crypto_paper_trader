@@ -9,7 +9,7 @@ function Navigation(){
         <Navbar bg="dark" variant="dark" fixed="top">
             <Navbar.Brand href="/">Home</Navbar.Brand>
             <Nav className="mr-auto">
-                <Link to="/chart" style={navStyle}>Chart</Link>
+                <Link to="/Coinbase" style={navStyle}>Coinbase</Link>
                 {/* <Nav.Link href="/chart">Features</Nav.Link>
                 <Nav.Link href="#pricing">Pricing</Nav.Link> */}
             </Nav>
@@ -18,3 +18,4 @@ function Navigation(){
 }
 
 export default Navigation;
+
