@@ -25,17 +25,9 @@ function DynamicChart(props){
     const Chart = () => {
         let dates = [];
         let prices = [];
-        // fetch("api/market")
-        // .then(response => {
-        //     return response.json();
-        // })
-        // .then(data =>{
         for(const obj of props.data){
             let price = obj.price
-            // let price = parseFloat(obj.price)
             let date = obj.date;
-            // let date = new Date(obj.timestamp);
-            // date = date.toLocaleString()
             prices.unshift(price);
             dates.unshift(date);
         }
@@ -53,7 +45,21 @@ function DynamicChart(props){
     }
     useEffect(() => {
         Chart();
-    }, [props]);
+    }, [props.data]);
+    const websocket = new CoinbasePro.WebsocketClient(
+        [`${props.name}-USD`],
+        'http://0.0.0.0:5000/ws-feed-public.sandbox.pro.coinbase.com:443',
+        {
+            key: '7b5de67294b88ea324809c63fb948851',
+            secret: 'cfANfm18txLVs2hy7RQjZO5hTuSDzn/Vky5NeJBqF4jQZ8k5avnDhLwCjFk7BhBJ5WIKVyZPulChwC7Drhey1Q==',
+            passphrase: 'fvkc770w27'
+        },
+        {
+            channels: ['ticker']
+        }
+    );
+    console.log(websocket)
+    websocket.on('message', data => {console.log(data)})
     return (
         <div className="table">
             <h1>{props.name} Prices</h1>
