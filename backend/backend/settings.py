@@ -132,16 +132,7 @@ CORS_ORIGIN_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
-    'https://localhost:8000'
+    'https://localhost:8000',
 )
 
 
-# Coinbase API KEY: wfTp4975e2m4E38J
-# coinbase Secret API KEY: VJ4AWYcaJZsFGnUERJglPc2oIofarg1u
-
-# coinbase pro api key: 7b5de67294b88ea324809c63fb948851
-# coinbase Pro secret key: cfANfm18txLVs2hy7RQjZO5hTuSDzn/Vky5NeJBqF4jQZ8k5avnDhLwCjFk7BhBJ5WIKVyZPulChwC7Drhey1Q==
-# coinbase pro passphrase:fvkc770w27
-
-
-# heroku app urls: https://powerful-anchorage-13751.herokuapp.com/
