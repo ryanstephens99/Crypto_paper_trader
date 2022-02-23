@@ -18,24 +18,18 @@ import { Link, Route, Switch } from "react-router-dom";
 import CoinBaseProData from '../apis/coinbaseAPI';
 import CoinbasePro from 'coinbase-pro';
 
-const publicClient = new CoinbasePro.PublicClient();
+import {useCryptoPrices, useCryptoTickers, CryptoPriceProvider} from "react-realtime-crypto-prices"
 
+const publicClient = new CoinbasePro.PublicClient();
+var count = 0;
 function DynamicChart(props){
     const [chartData, setChartData] = useState({});
     const Chart = () => {
         let dates = [];
         let prices = [];
-        // fetch("api/market")
-        // .then(response => {
-        //     return response.json();
-        // })
-        // .then(data =>{
         for(const obj of props.data){
             let price = obj.price
-            // let price = parseFloat(obj.price)
             let date = obj.date;
-            // let date = new Date(obj.timestamp);
-            // date = date.toLocaleString()
             prices.unshift(price);
             dates.unshift(date);
         }
@@ -53,7 +47,23 @@ function DynamicChart(props){
     }
     useEffect(() => {
         Chart();
-    }, [props]);
+    }, [props.data]);
+    const websocket = new CoinbasePro.WebsocketClient(
+        [`${props.name}-USD`],
+        'wss://ws-feed-public.sandbox.exchange.coinbase.com',
+        {
+            key: '7b5de67294b88ea324809c63fb948851',
+            secret: 'cfANfm18txLVs2hy7RQjZO5hTuSDzn/Vky5NeJBqF4jQZ8k5avnDhLwCjFk7BhBJ5WIKVyZPulChwC7Drhey1Q==',
+            passphrase: 'fvkc770w27'
+        },
+        {
+            channels: ['ticker']
+        }
+    );
+    // console.log(websocket);
+    // count += 1;
+    // console.log(count);
+    websocket.on('message', data => {console.log(data)})
     return (
         <div className="table">
             <h1>{props.name} Prices</h1>
@@ -109,10 +119,10 @@ function ListingsTable(){
         })
     }
     const [cryptoName, setCryptoName] = useState('BTC')
-    useEffect(() => { data(cryptoName) }, [cryptoName]);
+    useEffect(() => {data(cryptoName) }, [cryptoName]);
 
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
     const onClick = (item) => {
         setOpen(false);
         setCryptoName(item)
@@ -133,7 +143,7 @@ function ListingsTable(){
                 </TableHead>
                 <TableBody>
                     <TableRow><TableCell>
-                        <Collapse in={open} unmountOnExit>
+                        <Collapse in={open} >
                             <Table>
                                 <TableBody>
                                     {listings.map((item) => (

@@ -126,10 +126,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ORIGIN_CREDENTIALS = True
+
 CORS_ORIGIN_WHITELIST = (
     'https://localhost:3000',
+    'https://localhost:8000',
 )
 
 
-# Coinbase API KEY: wfTp4975e2m4E38J
-# coinbase Secret API KEY: VJ4AWYcaJZsFGnUERJglPc2oIofarg1u
