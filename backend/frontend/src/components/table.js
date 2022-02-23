@@ -18,8 +18,10 @@ import { Link, Route, Switch } from "react-router-dom";
 import CoinBaseProData from '../apis/coinbaseAPI';
 import CoinbasePro from 'coinbase-pro';
 
-const publicClient = new CoinbasePro.PublicClient();
+import {useCryptoPrices, useCryptoTickers, CryptoPriceProvider} from "react-realtime-crypto-prices"
 
+const publicClient = new CoinbasePro.PublicClient();
+var count = 0;
 function DynamicChart(props){
     const [chartData, setChartData] = useState({});
     const Chart = () => {
@@ -48,7 +50,7 @@ function DynamicChart(props){
     }, [props.data]);
     const websocket = new CoinbasePro.WebsocketClient(
         [`${props.name}-USD`],
-        'http://0.0.0.0:5000/ws-feed-public.sandbox.pro.coinbase.com:443',
+        'wss://ws-feed-public.sandbox.exchange.coinbase.com',
         {
             key: '7b5de67294b88ea324809c63fb948851',
             secret: 'cfANfm18txLVs2hy7RQjZO5hTuSDzn/Vky5NeJBqF4jQZ8k5avnDhLwCjFk7BhBJ5WIKVyZPulChwC7Drhey1Q==',
@@ -58,7 +60,9 @@ function DynamicChart(props){
             channels: ['ticker']
         }
     );
-    console.log(websocket)
+    // console.log(websocket);
+    // count += 1;
+    // console.log(count);
     websocket.on('message', data => {console.log(data)})
     return (
         <div className="table">
@@ -115,10 +119,10 @@ function ListingsTable(){
         })
     }
     const [cryptoName, setCryptoName] = useState('BTC')
-    useEffect(() => { data(cryptoName) }, [cryptoName]);
+    useEffect(() => {data(cryptoName) }, [cryptoName]);
 
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
     const onClick = (item) => {
         setOpen(false);
         setCryptoName(item)
@@ -139,7 +143,7 @@ function ListingsTable(){
                 </TableHead>
                 <TableBody>
                     <TableRow><TableCell>
-                        <Collapse in={open} unmountOnExit>
+                        <Collapse in={open} >
                             <Table>
                                 <TableBody>
                                     {listings.map((item) => (

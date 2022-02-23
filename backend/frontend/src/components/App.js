@@ -1,16 +1,20 @@
 
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { Route, Link, Switch, BrowserRouter as Router, render} from "react-router-dom";
+import { Route, BrowserRouter as Router, render} from "react-router-dom";
 
 import Navigation from "./navbar";
 import DateButton from "./dateButton";
-import { DynamicChart, ListingsTable} from "./table";
+import ListingsTable from "./table2";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-import CoinBaseProData from '../apis/coinbaseAPI';
+
+import { CRYPTO_COMPARE_API_KEY } from "./config";
+
+import { CryptoPriceProvider } from "react-realtime-crypto-prices";
+
 
 
 function App(){
@@ -21,7 +25,7 @@ function App(){
 
   // })
   // const coinbase = CoinBaseProData(dat
-
+  console.log("in app")
   return (
     <Router>
       <div>
@@ -33,10 +37,9 @@ function App(){
       }} /> */}
       <Route
         path="/Coinbase"
-        component={ListingsTable}
-        // render={(props) => (
-        //   <DynamicChart{...props} data={coinbase}/>
-        // )}
+        render={() => (
+          <ListingsTable/>
+        )}
       />
       </div>
     </Router>
@@ -46,4 +49,9 @@ function App(){
 export default App;
 
 const container = document.getElementById("app");
-ReactDOM.render(<App />, container);
+ReactDOM.render(
+  <CryptoPriceProvider cryptoCompareApiKey={CRYPTO_COMPARE_API_KEY}>
+    <App />
+  </CryptoPriceProvider>,
+  container
+);
